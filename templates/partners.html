@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Parceiros" %}{% endblock %}
+
+{% block content %}
+<section class="py-16 md:py-24 bg-gray-50">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-mocs-blue mb-4">{% trans "Parceiros" %}</h2>
+      <p class="text-lg text-gray-600">{% trans "Organizações que apoiam o MOCS." %}</p>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto">
+      {% for partner in partners %}
+      <div class="bg-white p-6 rounded-2xl shadow-lg text-center">
+        {% if partner.logo %}
+        <img src="{{ partner.logo.url }}" alt="{{ partner.name }}" class="mx-auto h-20 object-contain mb-4">
+        {% else %}
+        <div class="h-20 w-full bg-gray-100 rounded mb-4 flex items-center justify-center text-gray-400">Logo</div>
+        {% endif %}
+        <h3 class="font-bold text-mocs-blue">{{ partner.name }}</h3>
+        {% if partner.website_url %}
+        <a href="{{ partner.website_url }}" class="text-mocs-orange block mt-2">{% trans "Visitar site" %}</a>
+        {% endif %}
+      </div>
+      {% empty %}
+      <p class="text-center text-gray-600 md:col-span-4">{% trans "Nenhum parceiro cadastrado ainda." %}</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

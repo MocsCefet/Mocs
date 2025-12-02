@@ -1,0 +1,253 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faça Parte - Diplomacia para Todos</title>
+    <meta name="description" content="Projeto escolar público que democratiza o acesso à diplomacia e à cidadania através de simulações acadêmicas.">
+
+    <!-- Tailwind CSS (via CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Ícones (Lucide) -->
+    <script src="https://unpkg.com/lucide-react@latest/dist/lucide.min.js"></script>
+    <!-- Fonte (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+    <style>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+            },
+            colors: {
+              'mocs-blue': '#205395',
+              'mocs-orange': '#FF751F',
+            }
+          }
+        }
+      }
+    </style>
+
+    
+</head>
+<body class="font-sans antialiased text-gray-800 bg-white">
+
+    <!-- Header -->
+    <header class="sticky top-0 bg-white shadow-md z-40" role="banner">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-20">
+          <a href="/en/" aria-label="Voltar para a página inicial">
+            <div class="h-10 w-auto flex items-center">
+                <span class="text-3xl font-bold text-mocs-blue">MOCS</span>
+                <span class="w-8 h-8 rounded-full bg-mocs-orange ml-2"></span>
+            </div>
+          </a>
+
+          <nav class="hidden lg:flex items-center space-x-2" role="navigation" aria-label="Menu principal">
+            <a href="/en/" class="text-gray-700 hover:text-mocs-blue transition-colors font-medium px-3 py-2">Início</a>
+            <a href="/en/about/" class="text-gray-700 hover:text-mocs-blue transition-colors font-medium px-3 py-2">Sobre</a>
+            <a href="/en/timeline/" class="text-gray-700 hover:text-mocs-blue transition-colors font-medium px-3 py-2">História</a>
+            <a href="/en/team/" class="text-gray-700 hover:text-mocs-blue transition-colors font-medium px-3 py-2">Equipe</a>
+            <a href="/en/partners/" class="text-gray-700 hover:text-mocs-blue transition-colors font-medium px-3 py-2">Parceiros</a>
+            <div class="relative group">
+              <button class="text-gray-700 hover:text-mocs-blue transition-colors font-medium px-3 py-2 flex items-center">
+                Mais <i data-lucide="chevron-down" class="w-4 h-4 ml-1"></i>
+              </button>
+              <div class="absolute left-0 mt-0 w-48 bg-white rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 invisible group-hover:visible z-50">
+                <a href="/en/shop/" class="block w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 hover:text-mocs-blue">Loja</a>
+                <a href="/en/gallery/" class="block w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 hover:text-mocs-blue">Galeria</a>
+                <a href="/en/blog/" class="block w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 hover:text-mocs-blue">Notícias</a>
+                <a href="/en/events/" class="block w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 hover:text-mocs-blue">Eventos</a>
+                <a href="/en/contact/" class="block w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 hover:text-mocs-blue">Contato</a>
+              </div>
+            </div>
+          </nav>
+
+          <div class="hidden lg:flex items-center space-x-3">
+            
+            
+            <div class="relative" x-data="{ open: false }">
+              <button @click="open = !open" class="flex items-center justify-center w-10 h-10 rounded-full border-2 border-mocs-blue text-mocs-blue font-semibold transition-all hover:bg-mocs-blue hover:text-white" aria-label="Selecionar idioma">
+                EN
+              </button>
+              <div x-show="open" @click.away="open = false" class="absolute right-0 mt-2 w-24 bg-white rounded-lg shadow-xl z-50 overflow-hidden" style="display: none;">
+                <form action="/i18n/setlang/" method="post">
+                  <input type="hidden" name="csrfmiddlewaretoken" value="1A4ZTDBQG2G0wP4gbn3g2xHWlzFImHkcKjaaL8KETgSFzolb3fxgMZVgFKh6JnQq">
+                  <input name="next" type="hidden" value="/join/">
+                  
+                    
+                    <button type="submit" name="language" value="pt" class="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100">
+                      PT
+                    </button>
+                    
+                  
+                    
+                  
+                    
+                    <button type="submit" name="language" value="es" class="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100">
+                      ES
+                    </button>
+                    
+                  
+                </form>
+              </div>
+            </div>
+
+            <a href="/en/events/" class="bg-mocs-orange text-white px-5 py-2.5 rounded-full font-bold shadow-lg transition-transform hover:scale-105">
+              Participar
+            </a>
+          </div>
+
+          <div class="lg:hidden" x-data="{ open: false }">
+            <button @click="open = true" aria-label="Abrir menu" aria-expanded="false">
+              <i data-lucide="menu" class="w-7 h-7 text-mocs-blue"></i>
+            </button>
+            <div x-show="open" class="fixed inset-0 bg-white z-50 p-6" role="dialog" aria-modal="true" style="display: none;">
+              <div class="flex justify-between items-center mb-6">
+                <span class="text-3xl font-bold text-mocs-blue">MOCS</span>
+                <button @click="open = false" aria-label="Fechar menu">
+                  <i data-lucide="x" class="w-7 h-7 text-mocs-blue"></i>
+                </button>
+              </div>
+              <nav class="flex flex-col space-y-4 mb-6" role="navigation">
+                <a href="/en/" class="text-gray-700 hover:text-mocs-blue transition-colors font-medium px-3 py-2">Início</a>
+                <a href="/en/about/" class="text-gray-700 hover:text-mocs-blue transition-colors font-medium px-3 py-2">Sobre</a>
+                <a href="/en/timeline/" class="text-gray-700 hover:text-mocs-blue transition-colors font-medium px-3 py-2">História</a>
+                <a href="/en/team/" class="text-gray-700 hover:text-mocs-blue transition-colors font-medium px-3 py-2">Equipe</a>
+                <a href="/en/partners/" class="text-gray-700 hover:text-mocs-blue transition-colors font-medium px-3 py-2">Parceiros</a>
+                <a href="/en/shop/" class="text-gray-700 hover:text-mocs-blue transition-colors font-medium px-3 py-2">Loja</a>
+                <a href="/en/gallery/" class="text-gray-700 hover:text-mocs-blue transition-colors font-medium px-3 py-2">Galeria</a>
+                <a href="/en/blog/" class="text-gray-700 hover:text-mocs-blue transition-colors font-medium px-3 py-2">Notícias</a>
+                <a href="/en/events/" class="text-gray-700 hover:text-mocs-blue transition-colors font-medium px-3 py-2">Eventos</a>
+                <a href="/en/contact/" class="text-gray-700 hover:text-mocs-blue transition-colors font-medium px-3 py-2">Contato</a>
+              </nav>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </header>
+
+    <main role="main">
+        
+<section class="py-16 md:py-24 bg-gray-50" x-data="{ formType: '' }">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-mocs-blue mb-4" x-text="formType === 'equipe' ? 'Interesse em ser da Equipe' : (formType === 'diretor' ? 'Interesse em ser Diretor(a) de Comitê' : 'Formulários de Interesse')">Formulários de Interesse</h2>
+            <p class="text-lg text-gray-600" x-text="formType ? 'Preencha os campos abaixo.' : 'Selecione o formulário que deseja preencher.'">Selecione o formulário que deseja preencher.</p>
+        </div>
+
+        <div x-show="!formType" class="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto">
+            <button @click="formType = 'equipe'" class="p-8 bg-white rounded-2xl shadow-xl text-center transition-all hover:shadow-2xl hover:-translate-y-2">
+                <i data-lucide="users" class="w-10 h-10 mx-auto text-mocs-blue mb-4"></i>
+                <h3 class="text-2xl font-bold text-mocs-blue">Interesse em ser da Equipe</h3>
+            </button>
+            <button @click="formType = 'diretor'" class="p-8 bg-white rounded-2xl shadow-xl text-center transition-all hover:shadow-2xl hover:-translate-y-2">
+                <i data-lucide="star" class="w-10 h-10 mx-auto text-mocs-blue mb-4"></i>
+                <h3 class="text-2xl font-bold text-mocs-blue">Interesse em ser Diretor(a) de Comitê</h3>
+            </button>
+        </div>
+
+        <form x-show="formType" action="/en/join/" method="post" enctype="multipart/form-data" class="space-y-4 max-w-2xl mx-auto bg-white p-8 rounded-2xl shadow-lg" style="display: none;">
+            <input type="hidden" name="csrfmiddlewaretoken" value="1A4ZTDBQG2G0wP4gbn3g2xHWlzFImHkcKjaaL8KETgSFzolb3fxgMZVgFKh6JnQq">
+            <input type="hidden" name="form_type" x-bind:value="formType">
+
+            <div>
+                <label for="join-name" class="block text-sm font-medium text-gray-700 mb-1">Nome</label>
+                <input type="text" id="join-name" name="name" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm" required>
+            </div>
+            <div>
+                <label for="join-email" class="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
+                <input type="email" id="join-email" name="email" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm" required>
+            </div>
+            <div>
+                <label for="join-course" class="block text-sm font-medium text-gray-700 mb-1">Curso / Ano / Instituição</label>
+                <input type="text" id="join-course" name="course_year" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm" required>
+            </div>
+            <div x-show="formType === 'equipe'">
+                <label for="join-role" class="block text-sm font-medium text-gray-700 mb-1">Área de Interesse</label>
+                <select id="join-role" name="role_interest" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm bg-white">
+                    <option value="logistica">Secretariado (Logística)</option>
+                    <option value="midia">Secretariado (Mídia)</option>
+                    <option value="academico">Secretariado (Acadêmico)</option>
+                    <option value="coordenacao">Coordenação</option>
+                </select>
+            </div>
+            <div x-show="formType === 'diretor'">
+                <label for="join-experience" class="block text-sm font-medium text-gray-700 mb-1">Experiência prévia (Opcional)</label>
+                <textarea id="join-experience" name="experience" rows="3" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm"></textarea>
+            </div>
+            <div>
+                <label for="join-motivation" class="block text-sm font-medium text-gray-700 mb-1">Breve Motivação</label>
+                <textarea id="join-motivation" name="motivation" rows="5" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm" required></textarea>
+            </div>
+            <div>
+                <label for="join-cv" class="block text-sm font-medium text-gray-700 mb-1">Anexar CV (Opcional)</label>
+                <input type="file" id="join-cv" name="cv" class="w-full p-3 border border-gray-300 rounded-lg">
+            </div>
+
+            <button type="submit" class="w-full bg-mocs-orange text-white px-6 py-3 rounded-full font-bold text-lg shadow-xl transition-transform hover:scale-105">Enviar</button>
+            <button type="button" @click="formType = ''" class="w-full bg-gray-200 text-gray-700 px-6 py-3 rounded-full font-bold transition-all hover:bg-gray-300">Voltar</button>
+        </form>
+    </div>
+</section>
+
+    </main>
+
+    <footer class="bg-mocs-blue text-white" role="contentinfo">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div class="md:col-span-2">
+            <span class="text-3xl font-bold text-white">MOCS</span>
+            <p class="text-gray-300 max-w-md mt-4">MOCS (Modelo de Comitês Simulados) — CEFET-MG. Desde 2010 transformando a educação.</p>
+          </div>
+          <div>
+            <h4 class="font-bold text-lg mb-4 text-white">Navegação</h4>
+            <ul class="space-y-2">
+              <li><a href="/en/about/" class="hover:text-mocs-orange transition-colors">Sobre</a></li>
+              <li><a href="/en/events/" class="hover:text-mocs-orange transition-colors">Eventos</a></li>
+              <li><a href="/en/team/" class="hover:text-mocs-orange transition-colors">Equipe</a></li>
+              <li><a href="/en/contact/" class="hover:text-mocs-orange transition-colors">Contato</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-bold text-lg mb-4 text-white">Fale Conosco</h4>
+            <ul class="space-y-2 text-gray-300">
+              <li class="flex items-center space-x-2">
+                <i data-lucide="mail" class="w-5 h-5"></i>
+                <span>contato@mocs.cefetmg.br</span>
+              </li>
+              <li class="flex items-center space-x-2">
+                <i data-lucide="map-pin" class="w-5 h-5"></i>
+                <span>CEFET-MG, Campus II, BH</span>
+              </li>
+            </ul>
+            <div class="flex space-x-4 mt-6">
+              <a href="#" aria-label="Instagram" class="p-2 bg-white/10 rounded-full hover:bg-mocs-orange transition-colors">
+                <i data-lucide="instagram" class="w-5 h-5"></i>
+              </a>
+              <a href="#" aria-label="YouTube" class="p-2 bg-white/10 rounded-full hover:bg-mocs-orange transition-colors">
+                <i data-lucide="youtube" class="w-5 h-5"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="border-t border-white/20 mt-12 pt-8 text-center text-gray-400 text-sm">
+          &copy; 2025 MOCS CEFET-MG. Todos os direitos reservados.
+        </div>
+      </div>
+    </footer>
+
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <script>
+      lucide.createIcons();
+    </script>
+    
+</body>
+</html>

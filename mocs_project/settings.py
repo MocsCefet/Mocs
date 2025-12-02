@@ -6,7 +6,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-mocs-placeholder-key-replace-in-production'
 DEBUG = True
-ALLOWED_HOSTS = []
+# Em desenvolvimento aceitaremos hosts locais e o host de testes do Django (`testserver`).
+# NÃO use ALLOWED_HOSTS=['*'] em produção.
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'testserver']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
