@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Faça Parte" %}{% endblock %}
+
+{% block content %}
+<section class="py-16 md:py-24 bg-gray-50" x-data="{ formType: '' }">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-mocs-blue mb-4" x-text="formType === 'equipe' ? '{% trans "Interesse em ser da Equipe" %}' : (formType === 'diretor' ? '{% trans "Interesse em ser Diretor(a) de Comitê" %}' : '{% trans "Formulários de Interesse" %}')">{% trans "Formulários de Interesse" %}</h2>
+            <p class="text-lg text-gray-600" x-text="formType ? '{% trans "Preencha os campos abaixo." %}' : '{% trans "Selecione o formulário que deseja preencher." %}'">{% trans "Selecione o formulário que deseja preencher." %}</p>
+        </div>
+
+        <div x-show="!formType" class="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto">
+            <button @click="formType = 'equipe'" class="p-8 bg-white rounded-2xl shadow-xl text-center transition-all hover:shadow-2xl hover:-translate-y-2">
+                <i data-lucide="users" class="w-10 h-10 mx-auto text-mocs-blue mb-4"></i>
+                <h3 class="text-2xl font-bold text-mocs-blue">{% trans "Interesse em ser da Equipe" %}</h3>
+            </button>
+            <button @click="formType = 'diretor'" class="p-8 bg-white rounded-2xl shadow-xl text-center transition-all hover:shadow-2xl hover:-translate-y-2">
+                <i data-lucide="star" class="w-10 h-10 mx-auto text-mocs-blue mb-4"></i>
+                <h3 class="text-2xl font-bold text-mocs-blue">{% trans "Interesse em ser Diretor(a) de Comitê" %}</h3>
+            </button>
+        </div>
+
+        <form x-show="formType" action="{% url 'join' %}" method="post" enctype="multipart/form-data" class="space-y-4 max-w-2xl mx-auto bg-white p-8 rounded-2xl shadow-lg" style="display: none;">
+            {% csrf_token %}
+            <input type="hidden" name="form_type" x-bind:value="formType">
+
+            <div>
+                <label for="join-name" class="block text-sm font-medium text-gray-700 mb-1">{% trans "Nome" %}</label>
+                <input type="text" id="join-name" name="name" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm" required>
+            </div>
+            <div>
+                <label for="join-email" class="block text-sm font-medium text-gray-700 mb-1">{% trans "E-mail" %}</label>
+                <input type="email" id="join-email" name="email" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm" required>
+            </div>
+            <div>
+                <label for="join-course" class="block text-sm font-medium text-gray-700 mb-1">{% trans "Curso / Ano / Instituição" %}</label>
+                <input type="text" id="join-course" name="course_year" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm" required>
+            </div>
+            <div x-show="formType === 'equipe'">
+                <label for="join-role" class="block text-sm font-medium text-gray-700 mb-1">{% trans "Área de Interesse" %}</label>
+                <select id="join-role" name="role_interest" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm bg-white">
+                    <option value="logistica">{% trans "Secretariado (Logística)" %}</option>
+                    <option value="midia">{% trans "Secretariado (Mídia)" %}</option>
+                    <option value="academico">{% trans "Secretariado (Acadêmico)" %}</option>
+                    <option value="coordenacao">{% trans "Coordenação" %}</option>
+                </select>
+            </div>
+            <div x-show="formType === 'diretor'">
+                <label for="join-experience" class="block text-sm font-medium text-gray-700 mb-1">{% trans "Experiência prévia (Opcional)" %}</label>
+                <textarea id="join-experience" name="experience" rows="3" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm"></textarea>
+            </div>
+            <div>
+                <label for="join-motivation" class="block text-sm font-medium text-gray-700 mb-1">{% trans "Breve Motivação" %}</label>
+                <textarea id="join-motivation" name="motivation" rows="5" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm" required></textarea>
+            </div>
+            <div>
+                <label for="join-cv" class="block text-sm font-medium text-gray-700 mb-1">{% trans "Anexar CV (Opcional)" %}</label>
+                <input type="file" id="join-cv" name="cv" class="w-full p-3 border border-gray-300 rounded-lg">
+            </div>
+
+            <button type="submit" class="w-full bg-mocs-orange text-white px-6 py-3 rounded-full font-bold text-lg shadow-xl transition-transform hover:scale-105">{% trans "Enviar" %}</button>
+            <button type="button" @click="formType = ''" class="w-full bg-gray-200 text-gray-700 px-6 py-3 rounded-full font-bold transition-all hover:bg-gray-300">{% trans "Voltar" %}</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Contato" %}{% endblock %}
+
+{% block content %}
+<section class="py-16 md:py-24 bg-white">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-mocs-blue mb-4">{% trans "Fale Conosco" %}</h2>
+            <p class="text-lg text-gray-600">{% trans "Estamos abertos para dúvidas, parcerias e novas ideias." %}</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-16 max-w-6xl mx-auto">
+            <div class="bg-gray-50 p-8 rounded-2xl shadow-lg">
+                <h3 class="text-2xl font-bold text-mocs-blue mb-6">{% trans "Envie uma mensagem" %}</h3>
+                <form action="{% url 'contact' %}" method="post" class="space-y-4">
+                    {% csrf_token %}
+                    <div>
+                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">{% trans "Nome" %}</label>
+                    <input type="text" id="name" name="name" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm" required>
+                    </div>
+                    <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">{% trans "E-mail" %}</label>
+                    <input type="email" id="email" name="email" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm" required>
+                    </div>
+                    <div>
+                    <label for="subject" class="block text-sm font-medium text-gray-700 mb-1">{% trans "Assunto" %}</label>
+                    <input type="text" id="subject" name="subject" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm">
+                    </div>
+                    <div>
+                    <label for="message" class="block text-sm font-medium text-gray-700 mb-1">{% trans "Mensagem" %}</label>
+                    <textarea id="message" name="message" rows="5" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm" required></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-mocs-orange text-white px-6 py-3 rounded-full font-bold text-lg shadow-xl transition-transform hover:scale-105">{% trans "Enviar" %} <i data-lucide="send" class="w-5 h-5 inline ml-2"></i></button>
+                </form>
+            </div>
+
+            <div>
+                <h3 class="text-2xl font-bold text-mocs-blue mb-6">{% trans "Informações" %}</h3>
+                <ul class="space-y-6">
+                    <li class="flex items-start space-x-4">
+                    <div class="p-3 bg-blue-100 rounded-full">
+                        <i data-lucide="mail" class="w-6 h-6 text-mocs-blue"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-lg text-gray-800">E-mail</h4>
+                        <p class="text-gray-600">contato@mocs.cefetmg.br</p>
+                    </div>
+                    </li>
+                    <li class="flex items-start space-x-4">
+                    <div class="p-3 bg-blue-100 rounded-full">
+                        <i data-lucide="phone" class="w-6 h-6 text-mocs-blue"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-lg text-gray-800">WhatsApp</h4>
+                        <p class="text-gray-600">+55 (31) 9XXXX-XXXX</p>
+                    </div>
+                    </li>
+                    <li class="flex items-start space-x-4">
+                    <div class="p-3 bg-blue-100 rounded-full">
+                        <i data-lucide="map-pin" class="w-6 h-6 text-mocs-blue"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-lg text-gray-800">{% trans "Endereço" %}</h4>
+                        <p class="text-gray-600">CEFET-MG - Campus II<br>Av. Amazonas, 7675 - Nova Gameleira<br>Belo Horizonte, MG, 30510-000</p>
+                    </div>
+                    </li>
+                </ul>
+                <div class="mt-8 rounded-2xl overflow-hidden shadow-xl border-4 border-white">
+                    <img src="https://placehold.co/600x400/EEEEEE/205395?text=Mapa+do+CEFET-MG+II" alt="Mapa do CEFET-MG" class="w-full h-64 object-cover">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

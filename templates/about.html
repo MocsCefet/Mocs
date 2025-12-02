@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Sobre" %}{% endblock %}
+
+{% block content %}
+<section class="py-16 md:py-24 bg-gray-50">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-mocs-blue mb-4">{% trans "Sobre o MOCS" %}</h2>
+            <p class="text-lg text-gray-600">{% trans "Diplomacia para Todos — Conectar, Debater, Transformar" %}</p>
+        </div>
+
+        <div class="max-w-4xl mx-auto">
+            <div class="bg-white rounded-2xl p-10 mb-12 shadow-lg">
+            <h3 class="text-2xl font-bold text-mocs-blue mb-4">{% trans "Missão" %}</h3>
+            <p class="text-lg text-gray-700 leading-relaxed mb-6">{% trans "Promover acesso à diplomacia, consciência política e social, conectando Geografia, História, Sociologia, Filosofia e Linguagens ao universo das simulações." %}</p>
+            <h3 class="text-2xl font-bold text-mocs-blue mb-4">{% trans "Valores" %}</h3>
+            <p class="text-lg text-gray-700 leading-relaxed">{% trans "Acesso universal, Interdisciplinaridade, Inclusão, Educação Cívica." %}</p>
+            </div>
+            <div class="text-center">
+            <h3 class="text-2xl md:text-3xl font-bold text-mocs-blue mb-6">{% trans "Como o MOCS conecta disciplinas" %}</h3>
+            <p class="text-lg text-gray-700 leading-relaxed mb-8">{% blocktrans %}O MOCS é fundamentalmente interdisciplinar. Nossas simulações exigem que os participantes apliquem conhecimentos de:{% endblocktrans %}</p>
+            <div class="flex flex-wrap justify-center gap-4">
+                {% for item in "Geografia,História,Sociologia,Filosofia,Linguagens"|split:"," %}
+                <span class="bg-mocs-blue text-white px-5 py-2 rounded-full font-medium shadow-md">{{ item }}</span>
+                {% endfor %}
+            </div>
+            </div>
+            <div class="text-center mt-16">
+            <a href="{% url 'timeline' %}" class="inline-block bg-mocs-orange text-white px-8 py-4 rounded-full font-bold text-lg shadow-xl transition-transform hover:scale-105">{% trans "Nossa História Detalhada" %}</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

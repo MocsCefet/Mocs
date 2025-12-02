@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Notícias" %}{% endblock %}
+
+{% block content %}
+<section class="py-16 md:py-24 bg-gray-50">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-mocs-blue mb-4">{% trans "Notícias" %}</h2>
+      <p class="text-lg text-gray-600">{% trans "Últimas atualizações e comunicados do MOCS." %}</p>
+    </div>
+    <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+      {% for post in posts %}
+      <article class="bg-white p-6 rounded-2xl shadow-lg">
+        <h3 class="text-2xl font-bold text-mocs-blue mb-2">{{ post.title }}</h3>
+        <p class="text-gray-600 mb-4">{{ post.content|truncatewords:30 }}</p>
+        <a href="{% url 'blog_post_detail' post.pk %}" class="text-mocs-orange font-bold">{% trans "Ler mais" %} →</a>
+      </article>
+      {% empty %}
+      <p class="text-center text-gray-600 md:col-span-2">{% trans "Nenhuma notícia publicada ainda." %}</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

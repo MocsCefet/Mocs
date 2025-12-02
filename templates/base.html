@@ -1,0 +1,183 @@
+{% load static %}
+{% load i18n %}
+
+<!DOCTYPE html>
+<html lang="{{ request.LANGUAGE_CODE }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}MOCS CEFET-MG{% endblock %} - {% trans "Diplomacia para Todos" %}</title>
+    <meta name="description" content="{% block meta_description %}{% trans 'Projeto escolar público que democratiza o acesso à diplomacia e à cidadania através de simulações acadêmicas.' %}{% endblock %}">
+
+    <!-- Tailwind CSS (via CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Ícones (Lucide) -->
+    <script src="https://unpkg.com/lucide-react@latest/dist/lucide.min.js"></script>
+    <!-- Fonte (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+    <style>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+            },
+            colors: {
+              'mocs-blue': '#205395',
+              'mocs-orange': '#FF751F',
+            }
+          }
+        }
+      }
+    </style>
+
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="font-sans antialiased text-gray-800 bg-white">
+
+    <!-- Header -->
+    <header class="sticky top-0 bg-white shadow-md z-40" role="banner">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-20">
+          <a href="{% url 'home' %}" aria-label="{% trans 'Voltar para a página inicial' %}">
+            <div class="h-10 w-auto flex items-center">
+                <span class="text-3xl font-bold text-mocs-blue">MOCS</span>
+                <span class="w-8 h-8 rounded-full bg-mocs-orange ml-2"></span>
+            </div>
+          </a>
+
+          <nav class="hidden lg:flex items-center space-x-2" role="navigation" aria-label="Menu principal">
+            <a href="{% url 'home' %}" class="text-gray-700 hover:text-mocs-blue transition-colors font-medium px-3 py-2">{% trans "Início" %}</a>
+            <a href="{% url 'about' %}" class="text-gray-700 hover:text-mocs-blue transition-colors font-medium px-3 py-2">{% trans "Sobre" %}</a>
+            <a href="{% url 'timeline' %}" class="text-gray-700 hover:text-mocs-blue transition-colors font-medium px-3 py-2">{% trans "História" %}</a>
+            <a href="{% url 'team' %}" class="text-gray-700 hover:text-mocs-blue transition-colors font-medium px-3 py-2">{% trans "Equipe" %}</a>
+            <a href="{% url 'partners' %}" class="text-gray-700 hover:text-mocs-blue transition-colors font-medium px-3 py-2">{% trans "Parceiros" %}</a>
+            <div class="relative group">
+              <button class="text-gray-700 hover:text-mocs-blue transition-colors font-medium px-3 py-2 flex items-center">
+                {% trans "Mais" %} <i data-lucide="chevron-down" class="w-4 h-4 ml-1"></i>
+              </button>
+              <div class="absolute left-0 mt-0 w-48 bg-white rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 invisible group-hover:visible z-50">
+                <a href="{% url 'shop' %}" class="block w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 hover:text-mocs-blue">{% trans "Loja" %}</a>
+                <a href="{% url 'gallery' %}" class="block w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 hover:text-mocs-blue">{% trans "Galeria" %}</a>
+                <a href="{% url 'blog' %}" class="block w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 hover:text-mocs-blue">{% trans "Notícias" %}</a>
+                <a href="{% url 'events' %}" class="block w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 hover:text-mocs-blue">{% trans "Eventos" %}</a>
+                <a href="{% url 'contact' %}" class="block w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 hover:text-mocs-blue">{% trans "Contato" %}</a>
+              </div>
+            </div>
+          </nav>
+
+          <div class="hidden lg:flex items-center space-x-3">
+            {% get_current_language as LANGUAGE_CODE %}
+            {% get_available_languages as LANGUAGES %}
+            <div class="relative" x-data="{ open: false }">
+              <button @click="open = !open" class="flex items-center justify-center w-10 h-10 rounded-full border-2 border-mocs-blue text-mocs-blue font-semibold transition-all hover:bg-mocs-blue hover:text-white" aria-label="Selecionar idioma">
+                {{ LANGUAGE_CODE|upper }}
+              </button>
+              <div x-show="open" @click.away="open = false" class="absolute right-0 mt-2 w-24 bg-white rounded-lg shadow-xl z-50 overflow-hidden" style="display: none;">
+                <form action="{% url 'set_language' %}" method="post">
+                  {% csrf_token %}
+                  <input name="next" type="hidden" value="{{ request.get_full_path|slice:'3:' }}">
+                  {% for lang_code, lang_name in LANGUAGES %}
+                    {% if lang_code != LANGUAGE_CODE %}
+                    <button type="submit" name="language" value="{{ lang_code }}" class="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100">
+                      {{ lang_code|upper }}
+                    </button>
+                    {% endif %}
+                  {% endfor %}
+                </form>
+              </div>
+            </div>
+
+            <a href="{% url 'events' %}" class="bg-mocs-orange text-white px-5 py-2.5 rounded-full font-bold shadow-lg transition-transform hover:scale-105">
+              {% trans "Participar" %}
+            </a>
+          </div>
+
+          <div class="lg:hidden" x-data="{ open: false }">
+            <button @click="open = true" aria-label="Abrir menu" aria-expanded="false">
+              <i data-lucide="menu" class="w-7 h-7 text-mocs-blue"></i>
+            </button>
+            <div x-show="open" class="fixed inset-0 bg-white z-50 p-6" role="dialog" aria-modal="true" style="display: none;">
+              <div class="flex justify-between items-center mb-6">
+                <span class="text-3xl font-bold text-mocs-blue">MOCS</span>
+                <button @click="open = false" aria-label="Fechar menu">
+                  <i data-lucide="x" class="w-7 h-7 text-mocs-blue"></i>
+                </button>
+              </div>
+              <nav class="flex flex-col space-y-4 mb-6" role="navigation">
+                <a href="{% url 'home' %}" class="text-gray-700 hover:text-mocs-blue transition-colors font-medium px-3 py-2">{% trans "Início" %}</a>
+                <a href="{% url 'about' %}" class="text-gray-700 hover:text-mocs-blue transition-colors font-medium px-3 py-2">{% trans "Sobre" %}</a>
+                <a href="{% url 'timeline' %}" class="text-gray-700 hover:text-mocs-blue transition-colors font-medium px-3 py-2">{% trans "História" %}</a>
+                <a href="{% url 'team' %}" class="text-gray-700 hover:text-mocs-blue transition-colors font-medium px-3 py-2">{% trans "Equipe" %}</a>
+                <a href="{% url 'partners' %}" class="text-gray-700 hover:text-mocs-blue transition-colors font-medium px-3 py-2">{% trans "Parceiros" %}</a>
+                <a href="{% url 'shop' %}" class="text-gray-700 hover:text-mocs-blue transition-colors font-medium px-3 py-2">{% trans "Loja" %}</a>
+                <a href="{% url 'gallery' %}" class="text-gray-700 hover:text-mocs-blue transition-colors font-medium px-3 py-2">{% trans "Galeria" %}</a>
+                <a href="{% url 'blog' %}" class="text-gray-700 hover:text-mocs-blue transition-colors font-medium px-3 py-2">{% trans "Notícias" %}</a>
+                <a href="{% url 'events' %}" class="text-gray-700 hover:text-mocs-blue transition-colors font-medium px-3 py-2">{% trans "Eventos" %}</a>
+                <a href="{% url 'contact' %}" class="text-gray-700 hover:text-mocs-blue transition-colors font-medium px-3 py-2">{% trans "Contato" %}</a>
+              </nav>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </header>
+
+    <main role="main">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="bg-mocs-blue text-white" role="contentinfo">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div class="md:col-span-2">
+            <span class="text-3xl font-bold text-white">MOCS</span>
+            <p class="text-gray-300 max-w-md mt-4">{% trans "MOCS (Modelo de Comitês Simulados) — CEFET-MG. Desde 2010 transformando a educação." %}</p>
+          </div>
+          <div>
+            <h4 class="font-bold text-lg mb-4 text-white">{% trans "Navegação" %}</h4>
+            <ul class="space-y-2">
+              <li><a href="{% url 'about' %}" class="hover:text-mocs-orange transition-colors">{% trans "Sobre" %}</a></li>
+              <li><a href="{% url 'events' %}" class="hover:text-mocs-orange transition-colors">{% trans "Eventos" %}</a></li>
+              <li><a href="{% url 'team' %}" class="hover:text-mocs-orange transition-colors">{% trans "Equipe" %}</a></li>
+              <li><a href="{% url 'contact' %}" class="hover:text-mocs-orange transition-colors">{% trans "Contato" %}</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-bold text-lg mb-4 text-white">{% trans "Fale Conosco" %}</h4>
+            <ul class="space-y-2 text-gray-300">
+              <li class="flex items-center space-x-2">
+                <i data-lucide="mail" class="w-5 h-5"></i>
+                <span>contato@mocs.cefetmg.br</span>
+              </li>
+              <li class="flex items-center space-x-2">
+                <i data-lucide="map-pin" class="w-5 h-5"></i>
+                <span>CEFET-MG, Campus II, BH</span>
+              </li>
+            </ul>
+            <div class="flex space-x-4 mt-6">
+              <a href="#" aria-label="Instagram" class="p-2 bg-white/10 rounded-full hover:bg-mocs-orange transition-colors">
+                <i data-lucide="instagram" class="w-5 h-5"></i>
+              </a>
+              <a href="#" aria-label="YouTube" class="p-2 bg-white/10 rounded-full hover:bg-mocs-orange transition-colors">
+                <i data-lucide="youtube" class="w-5 h-5"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="border-t border-white/20 mt-12 pt-8 text-center text-gray-400 text-sm">
+          &copy; {% now "Y" %} MOCS CEFET-MG. {% trans "Todos os direitos reservados." %}
+        </div>
+      </div>
+    </footer>
+
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <script>
+      lucide.createIcons();
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
